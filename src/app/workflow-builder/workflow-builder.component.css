@@ -189,10 +189,73 @@
   color: #ef4444;
 }
 
-.node-body {
+.node-title-input,
+.node-body-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 2px 4px;
+  color: inherit;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.node-title-input {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-800);
+  margin-left: -4px;
+}
+
+.node-body-input {
   font-size: 0.95rem;
   color: #1a1a1a;
   font-weight: 500;
+  resize: none;
+  margin-left: -4px;
+  margin-top: 4px;
+  min-height: 1.5em;
+  overflow: hidden;
+}
+
+.node:hover .node-title-input,
+.node:hover .node-body-input {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.node-title-input:focus,
+.node-body-input:focus {
+  outline: none;
+  background: white !important;
+  border-color: var(--bright-blue) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  color: #000 !important;
+}
+
+/* Dark mode overrides for inputs */
+:host-context(.dark) .node-title-input {
+  color: var(--gray-300);
+}
+
+:host-context(.dark) .node-body-input {
+  color: white;
+}
+
+:host-context(.dark) .node:hover .node-title-input,
+:host-context(.dark) .node:hover .node-body-input {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:host-context(.dark) .node-title-input:focus,
+:host-context(.dark) .node-body-input:focus {
+  background: #1e1e1e !important;
+  color: white !important;
 }
 
 .handle {

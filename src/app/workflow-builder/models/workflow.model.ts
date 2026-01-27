@@ -6,6 +6,7 @@ export interface Position {
 export interface NodeModel {
     id: string;
     type: string;
+    title?: string;
     label: string;
     position: Position;
 }

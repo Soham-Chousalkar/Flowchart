@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Component, ElementRef, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 import { WorkflowService } from './services/workflow.service';
 import { NodeModel, ConnectionModel } from './models/workflow.model';
@@ -6,7 +7,7 @@ import { NodeModel, ConnectionModel } from './models/workflow.model';
 @Component({
     selector: 'app-workflow-builder',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './workflow-builder.component.html',
     styleUrl: './workflow-builder.component.css',
 })
@@ -81,7 +82,8 @@ export class WorkflowBuilder implements AfterViewInit {
         const newNode: NodeModel = {
             id: Date.now().toString(),
             type,
-            label: `${type} Node`,
+            title: type, // Initial title matches type
+            label: `${type} Node Description`,
             position: { x: x - 75, y: y - 45 }, // Offset to drop in center of node (150px width)
         };
         this.nodes.push(newNode);
@@ -207,15 +209,20 @@ export class WorkflowBuilder implements AfterViewInit {
     }
 
     // ---------- Other actions ----------
+    onInputFocus(event: FocusEvent) {
+        const input = event.target as HTMLInputElement | HTMLTextAreaElement;
+        input.select();
+    }
+
+    onInputMouseDown(event: MouseEvent) {
+        event.stopPropagation();
+    }
+
     resetView() {
         this.canvasScale = 1;
         this.centerOrigin();
     }
 
-    openConfig(node: NodeModel) {
-        const newLabel = prompt('Enter node label', node.label);
-        if (newLabel !== null) node.label = newLabel;
-    }
 
     saveWorkflow() {
         const json = this.workflowService.export(this.nodes, this.connections);

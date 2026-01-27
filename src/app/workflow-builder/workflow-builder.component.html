@@ -109,9 +109,10 @@
 
         <div class="node" *ngFor="let node of nodes" [style.left.px]="node.position.x" [style.top.px]="node.position.y"
           (mousedown)="onNodeMouseDown($event, node)" (mouseup)="onNodeMouseUp($event, node)"
-          (dblclick)="openConfig(node)" [attr.aria-label]="'Workflow node ' + node.id" tabindex="0">
+          [attr.aria-label]="'Workflow node ' + node.id" tabindex="0">
           <div class="node-header">
-            <span>{{node.type}}</span>
+            <input class="node-title-input" [(ngModel)]="node.title" [placeholder]="node.type"
+              (focus)="onInputFocus($event)" (mousedown)="onInputMouseDown($event)" spellcheck="false">
             <button class="delete-btn" (click)="deleteNode($event, node)" title="Delete Node">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -121,7 +122,8 @@
               </svg>
             </button>
           </div>
-          <div class="node-body">{{node.label}}</div>
+          <textarea class="node-body-input" [(ngModel)]="node.label" (focus)="onInputFocus($event)"
+            (mousedown)="onInputMouseDown($event)" rows="2" spellcheck="false" placeholder="Description..."></textarea>
 
           <!-- Connection Handle -->
           <div class="handle" (mousedown)="onHandleMouseDown($event, node)" title="Drag to connect"></div>
