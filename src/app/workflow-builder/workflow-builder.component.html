@@ -1,0 +1,132 @@
+<!-- Workflow Builder Component -->
+<div class="workflow-builder">
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button (click)="resetView()" aria-label="Reset View">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        <path d="M3 3v5h5" />
+      </svg>
+      <span>Reset</span>
+    </button>
+    <button (click)="saveWorkflow()" aria-label="Save Workflow">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+        <polyline points="17 21 17 13 7 13 7 21" />
+        <polyline points="7 3 7 8 15 8" />
+      </svg>
+      <span>Save</span>
+    </button>
+    <button (click)="loadWorkflow()" aria-label="Load Workflow">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
+      </svg>
+      <span>Load</span>
+    </button>
+    <button (click)="toggleTheme()" aria-label="Toggle Theme">
+      <svg *ngIf="!darkMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg *ngIf="darkMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <span>{{darkMode ? 'Light' : 'Dark'}}</span>
+    </button>
+  </div>
+
+  <div class="main-area">
+    <!-- Side panel with node palette -->
+    <aside class="palette" aria-label="Node Palette">
+      <h3>Components</h3>
+      <div class="palette-list">
+        <div *ngFor="let type of nodeTypes" draggable="true" (dragstart)="onDragStart($event, type)"
+          class="palette-item">
+          <div class="palette-icon">
+            <svg *ngIf="type==='Start'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 8 16 12 12 16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+            </svg>
+            <svg *ngIf="type==='Task'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <line x1="3" y1="9" x2="21" y2="9" />
+              <line x1="9" y1="21" x2="9" y2="9" />
+            </svg>
+            <svg *ngIf="type==='Decision'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 12l10 10 10-10L12 2z" />
+            </svg>
+            <svg *ngIf="type==='End'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
+            </svg>
+          </div>
+          <span>{{type}}</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Canvas -->
+    <section class="canvas" #canvasContainer (wheel)="onZoom($event)" (mousedown)="onCanvasMouseDown($event)"
+      tabindex="0" aria-label="Workflow Canvas">
+      <div class="canvas-transform"
+        [style.transform]="'translate(' + canvasTranslate.x + 'px,' + canvasTranslate.y + 'px) scale(' + canvasScale + ')'">
+        <svg class="connections" width="5000" height="5000">
+          <!-- Existing connections -->
+          <path *ngFor="let conn of connections" [attr.d]="getConnectionPath(conn.from, conn.to)" fill="none"
+            stroke="#4a90e2" stroke-width="3" marker-end="url(#arrow)" />
+
+          <!-- Active connection (while dragging) -->
+          <path *ngIf="activeConnection" [attr.d]="getConnectionPath(activeConnection.from, null)" fill="none"
+            stroke="#4a90e2" stroke-width="3" stroke-dasharray="5,5" />
+
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"
+              markerUnits="strokeWidth">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#4a90e2" />
+            </marker>
+          </defs>
+        </svg>
+
+        <div class="node" *ngFor="let node of nodes" [style.left.px]="node.position.x" [style.top.px]="node.position.y"
+          (mousedown)="onNodeMouseDown($event, node)" (mouseup)="onNodeMouseUp($event, node)"
+          (dblclick)="openConfig(node)" [attr.aria-label]="'Workflow node ' + node.id" tabindex="0">
+          <div class="node-header">
+            <span>{{node.type}}</span>
+            <button class="delete-btn" (click)="deleteNode($event, node)" title="Delete Node">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+            </button>
+          </div>
+          <div class="node-body">{{node.label}}</div>
+
+          <!-- Connection Handle -->
+          <div class="handle" (mousedown)="onHandleMouseDown($event, node)" title="Drag to connect"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
