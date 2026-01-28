@@ -1,0 +1,90 @@
+{
+    "nodes": [
+        {
+            "id": "1",
+            "type": "Start",
+            "title": "Initial Request",
+            "label": "Workflow starts here when a user submits a support ticket.",
+            "position": {
+                "x": 50,
+                "y": 100
+            }
+        },
+        {
+            "id": "2",
+            "type": "Task",
+            "title": "Review Ticket",
+            "label": "Process the ticket details and assign urgency.",
+            "position": {
+                "x": 300,
+                "y": 100
+            }
+        },
+        {
+            "id": "3",
+            "type": "Decision",
+            "title": "Is Automated?",
+            "label": "Determine if the response can be handled by AI.",
+            "position": {
+                "x": 550,
+                "y": 100
+            }
+        },
+        {
+            "id": "4",
+            "type": "Task",
+            "title": "AI Response",
+            "label": "Send response via Chatbot system.",
+            "position": {
+                "x": 800,
+                "y": 50
+            }
+        },
+        {
+            "id": "5",
+            "type": "Task",
+            "title": "Human Review",
+            "label": "Assign to available support agent.",
+            "position": {
+                "x": 800,
+                "y": 150
+            }
+        },
+        {
+            "id": "6",
+            "type": "End",
+            "title": "Completed",
+            "label": "Final resolution achieved and ticket closed.",
+            "position": {
+                "x": 1050,
+                "y": 100
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "1",
+            "to": "2"
+        },
+        {
+            "from": "2",
+            "to": "3"
+        },
+        {
+            "from": "3",
+            "to": "4"
+        },
+        {
+            "from": "3",
+            "to": "5"
+        },
+        {
+            "from": "4",
+            "to": "6"
+        },
+        {
+            "from": "5",
+            "to": "6"
+        }
+    ]
+}

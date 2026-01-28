@@ -1,59 +1,61 @@
-# WorkflowBuilder
+# 🚀 Workflow Builder UI Component
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1.
+A polished, high-performance Workflow Builder built with **Angular 21** and **Vanilla CSS**. This component allows users to visually design workflows with drag-and-drop nodes, interactive connections, and a robust state management system.
 
-## Development server
+## ✨ Key Features
 
-To start a local development server, run:
+- **Node Management**: Drag nodes from the side palette (Start, Task, Decision, End) onto a dynamic canvas.
+- **Interactive Canvas**: Smooth Panning and Zooming (Infinite feel) with a "Reset View" feature.
+- **Connection Engine**: Draggable connections with automatic path routing (Bézier curves) and arrow indicators.
+- **Smart Configuration**: Context-aware side panel to edit node properties (titles, descriptions) or connection states.
+- **History System**: Full **Undo/Redo** support (Ctrl+Z / Ctrl+Shift+Z) covering transformations and structural changes.
+- **Keyboard Navigation**: Move nodes with arrow keys (Shift for larger steps) and delete items via the keyboard.
+- **Workflow Validation**: Integrated checker to ensure connectivity and structural integrity (Start/End nodes).
+- **Save & Load**: Fast JSON-based export/import functionality.
+- **Premium UI**: 
+  - Glassmorphism effects
+  - Responsive design (Desktop & Tablet)
+  - **Dark Mode** support
+  - WCAG 2.1 oriented accessibility (ARIA labels, keyboard controls)
 
-```bash
-ng serve
-```
+## 🛠️ Technology Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Framework**: Angular (Latest)
+- **Styling**: Vanilla CSS (Modern Grid/Flexbox)
+- **State**: In-component history stack
+- **Icons**: Lean SVG system
 
-## Code scaffolding
+## 🚀 Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1.  **Clone the Repo**:
+    ```bash
+    git clone [repository-url]
+    cd workflow-builder
+    ```
+2.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+3.  **Run Development Server**:
+    ```bash
+    npm start
+    ```
+    Navigate to `http://localhost:4200/`.
 
-```bash
-ng generate component component-name
-```
+## 📂 Project Structure
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `src/app/workflow-builder`: Core component logic and templates.
+- `src/app/workflow-builder/models`: TypeScript interfaces for Nodes and Connections.
+- `src/app/workflow-builder/services`: JSON export/import logic.
 
-```bash
-ng generate --help
-```
+## 💾 Keyboard Shortcuts
 
-## Building
+- `Arrow Keys`: Move selected node
+- `Shift + Arrow Keys`: Large move
+- `Delete / Backspace`: Remove selected node/connection
+- `Ctrl + Z`: Undo
+- `Ctrl + Shift + Z`: Redo
 
-To build the project run:
+## 📝 License
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
