@@ -1,12 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { WorkflowBuilder } from './workflow-builder/workflow-builder.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [WorkflowBuilder],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  template: `<app-workflow-builder></app-workflow-builder>`,
+  styles: [`:host { display: block; height: 100vh; width: 100vw; overflow: hidden; }`]
 })
-export class App {
-  protected readonly title = signal('workflow-builder');
-}
+export class App { }
